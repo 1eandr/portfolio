@@ -7,22 +7,25 @@ const THEME_KEY = 'portfolio-theme'
 const LANG_KEY = 'portfolio-lang'
 const YEAR = new Date().getFullYear()
 
-const SECTION_IDS = [
-  'about',
-  'experience',
-  'projects',
-  'journey',
-  'tech',
-  'next',
-  'languages',
-  'contact',
-]
+const SECTION_IDS = ['about', 'experience', 'projects', 'tech', 'contact']
 
 type Theme = 'dark' | 'light'
 
 const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+const INTRO_KEY = 'portfolio-intro-seen'
+
+const introSkipped = () => {
+  try {
+    return (
+      sessionStorage.getItem(INTRO_KEY) === 'seen' || window.location.hash !== ''
+    )
+  } catch {
+    return false
+  }
+}
 
 type TyperProps = {
   text: string
@@ -198,8 +201,8 @@ export default function App() {
   }, [lang])
 
   const [activeId, setActiveId] = useState('')
-  const [started, setStarted] = useState(false)
-  const [introMounted, setIntroMounted] = useState(true)
+  const [started, setStarted] = useState(introSkipped)
+  const [introMounted, setIntroMounted] = useState(() => !introSkipped())
 
   useEffect(() => {
     document.documentElement.classList.toggle('locked', !started)
@@ -214,6 +217,11 @@ export default function App() {
 
   const handleStart = () => {
     setStarted(true)
+    try {
+      sessionStorage.setItem(INTRO_KEY, 'seen')
+    } catch {
+      /* sessão indisponível — intro aparece de novo no próximo load */
+    }
     window.setTimeout(() => document.getElementById('main')?.focus(), 560)
   }
 
@@ -251,10 +259,7 @@ export default function App() {
     ['#about', t.nav.about],
     ['#experience', t.nav.experience],
     ['#projects', t.nav.projects],
-    ['#journey', t.nav.journey],
     ['#tech', t.nav.tech],
-    ['#next', t.nav.next],
-    ['#languages', t.nav.languages],
     ['#contact', t.nav.contact],
   ]
 
@@ -424,6 +429,17 @@ export default function App() {
                   </li>
                 ))}
               </ul>
+              <p className="label">{t.about.langsLabel}</p>
+              <div>
+                {t.about.languages.map(item => (
+                  <div className="lang-row" key={item.code}>
+                    <span className="lang-row__code">{item.code}</span>
+                    <span className="lang-row__name">{item.name}</span>
+                    <span className="lang-row__dots" aria-hidden="true" />
+                    <span className="lang-row__level">{item.level}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -512,29 +528,10 @@ export default function App() {
           </div>
         </section>
 
-        {/* ================= JOURNEY ================= */}
-        <section className="sec" id="journey">
-          <div className="wrap sec__grid">
-            <SecHead key={lang} num={secNum(4)} cmd={t.journey.cmd} sub={t.journey.lead} />
-            <div className="sec__body">
-              <p>{t.journey.intro}</p>
-              <ul className="trail">
-                {t.journey.items.map(item => (
-                  <li className="trail__item" key={item.title}>
-                    <span className="trail__tag">[ {item.tag} ]</span>
-                    <h3>{item.title}</h3>
-                    <p>{item.text}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-
         {/* ================= STACK ================= */}
         <section className="sec" id="tech">
           <div className="wrap sec__grid">
-            <SecHead key={lang} num={secNum(5)} cmd={t.tech.cmd} sub={t.tech.lead} />
+            <SecHead key={lang} num={secNum(4)} cmd={t.tech.cmd} sub={t.tech.lead} />
             <div className="sec__body">
               <p>{t.tech.intro}</p>
               {t.tech.groups.map(group => (
@@ -553,51 +550,10 @@ export default function App() {
           </div>
         </section>
 
-        {/* ================= NEXT STEPS ================= */}
-        <section className="sec" id="next">
-          <div className="wrap sec__grid">
-            <SecHead key={lang} num={secNum(6)} cmd={t.next.cmd} sub={t.next.lead} />
-            <div className="sec__body">
-              <p>{t.next.intro}</p>
-              <ul className="nexts">
-                {t.next.items.map(item => (
-                  <li key={item.n}>
-                    <b>[{item.n}]</b>
-                    <h3>{item.title}</h3>
-                    <p>{item.text}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* ================= LANGUAGES ================= */}
-        <section className="sec" id="languages">
-          <div className="wrap sec__grid">
-            <SecHead
-              key={lang}
-              num={secNum(7)}
-              cmd={t.languages.cmd}
-              sub={t.languages.lead}
-            />
-            <div className="sec__body">
-              {t.languages.items.map(item => (
-                <div className="lang-row" key={item.code}>
-                  <span className="lang-row__code">{item.code}</span>
-                  <span className="lang-row__name">{item.name}</span>
-                  <span className="lang-row__dots" aria-hidden="true" />
-                  <span className="lang-row__level">{item.level}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ================= CONTACT ================= */}
         <section className="sec" id="contact">
           <div className="wrap sec__grid">
-            <SecHead key={lang} num={secNum(8)} cmd={t.contact.cmd} sub={t.contact.lead} />
+            <SecHead key={lang} num={secNum(5)} cmd={t.contact.cmd} sub={t.contact.lead} />
             <div className="sec__body">
               <p>{t.contact.intro}</p>
               <div className="contact-list">
@@ -615,6 +571,19 @@ export default function App() {
                   <span className="prompt">$</span> {t.contact.gitLabel}
                   <small>github.com/1eandr</small>
                 </a>
+                {profile.linkedin !== '' && (
+                  <a
+                    className="term-link"
+                    href={profile.linkedin}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span className="prompt">$</span> {t.contact.liLabel}
+                    <small>
+                      {profile.linkedin.replace(/^https?:\/\/(www\.)?/, '')}
+                    </small>
+                  </a>
+                )}
               </div>
             </div>
           </div>
