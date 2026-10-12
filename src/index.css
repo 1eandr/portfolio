@@ -13,6 +13,10 @@
   --prompt: #39ff14;
   --sel: #16341f;
   --grid: rgba(74, 222, 128, 0.05);
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, sans-serif;
   color-scheme: dark;
 }
 
@@ -44,7 +48,7 @@ body {
   margin: 0;
   background: transparent;
   color: var(--text);
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: var(--font-sans);
   font-size: 15px;
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
@@ -1105,6 +1109,49 @@ html.locked {
   .sec:nth-of-type(even) {
     padding: 3.5rem 0;
   }
+}
+
+/* ================= Mono: títulos e cromo de terminal =================
+   corpo do texto herda o sans do body para leitura confortável */
+h1,
+h2,
+h3,
+h4,
+.brand,
+.nav a,
+.tgl,
+.btn,
+.start-card,
+.start-card__cmd,
+.start-card__hint,
+.prompt,
+.caret,
+.hero__cmd,
+.hero__status,
+.sec__num,
+.sec__head h2,
+.sec__lead,
+.term h3,
+.term__meta,
+.tag,
+.label,
+.checks,
+.meta-list,
+.proj__name,
+.proj__idx,
+.proj__meta,
+.proj__access,
+.stackgroup__name,
+.chip,
+.lang-row__code,
+.term-link,
+.term-link small,
+.photo__cap,
+.intro,
+.site-footer,
+.empty,
+.skip {
+  font-family: var(--font-mono);
 }
 
 /* ================= Reduced motion ================= */

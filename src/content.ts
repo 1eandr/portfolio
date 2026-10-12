@@ -34,6 +34,7 @@ const pt = {
       'Trabalho com suporte em sistemas fiscais e automatizo o que se repete. A emissão mensal de notas, que tomava uma manhã inteira, hoje roda em cerca de 5 minutos.',
     ctaContact: 'fale comigo',
     ctaTech: 'ver stack',
+    ctaCv: 'baixar cv',
   },
   about: {
     cmd: 'sobre',
@@ -81,7 +82,6 @@ const pt = {
         text: 'Procedimentos de atendimento documentados e treinamento de usuários.',
       },
     ],
-    resultsLabel: 'resultados',
     results: [
       'Emissão mensal de notas: de uma manhã inteira para cerca de 5 minutos',
       'Finalização de cadastros no emissor municipal feita pelo robô, sem digitação manual',
@@ -164,6 +164,7 @@ const pt = {
     mailLabel: 'mail',
     gitLabel: 'git remote -v',
     liLabel: 'linkedin',
+    cvLabel: 'cv',
   },
 }
 
@@ -203,6 +204,7 @@ const en: Dict = {
       'I work in IT support for fiscal systems and automate whatever repeats. The monthly invoice run, which used to take a full morning, now takes about 5 minutes.',
     ctaContact: 'get in touch',
     ctaTech: 'see stack',
+    ctaCv: 'download cv',
   },
   about: {
     cmd: 'about',
@@ -250,7 +252,6 @@ const en: Dict = {
         text: 'Documented support procedures and user training.',
       },
     ],
-    resultsLabel: 'results',
     results: [
       'Monthly invoice run: from a full morning to about 5 minutes',
       'Finishing registrations in the municipal emitter done by the robot, no manual typing',
@@ -331,6 +332,7 @@ const en: Dict = {
     mailLabel: 'mail',
     gitLabel: 'git remote -v',
     liLabel: 'linkedin',
+    cvLabel: 'cv',
   },
 }
 

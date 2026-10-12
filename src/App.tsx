@@ -382,6 +382,14 @@ export default function App() {
                 <a className="btn btn--ghost" href="#tech">
                   {t.hero.ctaTech}
                 </a>
+                <a
+                  className="btn btn--ghost"
+                  href="curriculo.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {t.hero.ctaCv} <span aria-hidden="true">↓</span>
+                </a>
               </div>
             </div>
             <figure className="photo">
@@ -584,6 +592,15 @@ export default function App() {
                     </small>
                   </a>
                 )}
+                <a
+                  className="term-link"
+                  href="curriculo.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span className="prompt">$</span> {t.contact.cvLabel}
+                  <small>curriculo.pdf</small>
+                </a>
               </div>
             </div>
           </div>
